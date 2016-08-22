@@ -1,0 +1,59 @@
+---
+title: "Google Finance API"
+author: "Pedro Moreira"
+date: "14 August 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("GoogleFinanceAPI.R")
+```
+
+## Get stock price
+The google finance API is accessible in multiple ways. One option is to use an API hosted at finance.google.com
+
+# finance.google.com
+
+For example the following URL <http://finance.google.com/finance/info?client=ig&q=NASDAQ%3AAAPL,GOOG> retrieves the price of Apple and Google.
+
+q takes the form of Excahnge:Symbols, where Symbols is a comma separate list of stock symbols (e.g. NASDAQ:AAPL,GOOG).
+
+The data returned contains several attributes, such as:
+Attribute | Description
+----------| -------------
+  id	    | ID
+  t       | StockSymbol
+  e       | Index
+  l       | LastTradePrice
+  l_cur	  | LastTradeWithCurrency
+ltt	      | LastTradeTime
+lt_dts	  | LastTradeDateTime
+  lt	    | LastTradeDateTimeLong
+  div	    | Dividend
+  yld	    | Yield
+  s	      | LastTradeSize
+  c	      | Change
+  cp	    | ChangePercent
+  el	    | ExtraHrsLastTradePrice
+  el_cur	| ExtraHrsLastTradeWithCurrency
+  elt	    | ExtraHrsLastTradeDateTimeLong
+  ec	    | ExtraHrsChange
+  ecp	    | ExtraHrsChangePercent
+  pcls_fix| PreviousClosePrice
+
+
+
+```{r }
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
