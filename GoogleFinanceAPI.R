@@ -26,6 +26,14 @@ COLUMN_FRIENDLY_NAMES[["elt"]] <- "ExtraHrsLastTradeDateTimeLong"
 COLUMN_FRIENDLY_NAMES[["ec"]] <- "ExtraHrsChange"
 COLUMN_FRIENDLY_NAMES[["ecp"]] <- "ExtraHrsChangePercent"
 COLUMN_FRIENDLY_NAMES[["pcls_fix"]] <- "PreviousClosePrice"
+COLUMN_FRIENDLY_NAMES[["op"]] <- "Open"
+COLUMN_FRIENDLY_NAMES[["hi"]] <- "High"
+COLUMN_FRIENDLY_NAMES[["lo"]] <- "Low"
+COLUMN_FRIENDLY_NAMES[["vo"]] <- "Volume"
+COLUMN_FRIENDLY_NAMES[["hi52"]] <- "HighPrevious52Weeks"
+COLUMN_FRIENDLY_NAMES[["lo52"]] <- "LowPrevious52Weeks"
+COLUMN_FRIENDLY_NAMES[["name"]] <- "SymbolName"
+COLUMN_FRIENDLY_NAMES[["type"]] <- "SymbolType"
 
 
 # Public functions ----
@@ -107,9 +115,3 @@ symbol_get_prices <- function(exchange, stock, intervalInSeconds, goBackPeriod) 
   else
     COLUMN_FRIENDLY_NAMES[[name]]
 }
-
-# FTSE values ----
-
-# Load FTSE
-FTSE <- symbol_get_info("INDEXFTSE", "UKX")
-FTSE_PRICES <- symbol_get_prices("INDEXFTSE", "UKX", 60, "2d")

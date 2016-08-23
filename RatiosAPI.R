@@ -8,15 +8,8 @@ library(dplyr)
 
 source("GoogleFinanceAPI.R")
 
-# FTSE values ----
-
-# Load FTSE
-#FTSE <- symbol_get_info("INDEXFTSE", "UKX")
-intervalInSeconds <- 60*60*24
-FTSE_PRICES <- symbol_get_prices("INDEXFTSE", "UKX", intervalInSeconds , "2Y")
-
 # Determine what grouping to use based on length of interval in seconds
-group_by_vector <- function(interval) {
+.group_by_vector <- function(interval) {
   if (interval < 60*60)
     list(~YEAR,~MONTH,~DAY, ~HOURS)
   else if (interval< 60*60*24)
@@ -38,7 +31,7 @@ symbol_get_efficiency_ratio <- function(prices, group_by_vector) {
   prices_aux_open_values <-
     # Group and obtain OPEN value for the group
     prices_aux %>%
-    group_by_(.dots = group_by_vector(intervalInSeconds)) %>%
+    group_by_(.dots = .group_by_vector(intervalInSeconds)) %>%
     filter(row_number() == 1) %>%
     select(OPEN) %>%
     ungroup
@@ -46,7 +39,7 @@ symbol_get_efficiency_ratio <- function(prices, group_by_vector) {
   prices_aux_close_values <-
     # Group and obtain CLOSE value for the group
     prices_aux %>%
-    group_by_(.dots = group_by_vector(intervalInSeconds)) %>%
+    group_by_(.dots = .group_by_vector(intervalInSeconds)) %>%
     filter(row_number() == n()) %>%
     select(CLOSE) %>%
     ungroup
@@ -54,7 +47,7 @@ symbol_get_efficiency_ratio <- function(prices, group_by_vector) {
   prices_aux_sums <-
     # Group and obtain Cumulative sum of difference OPEN-CLOSE value for the group
     prices_aux %>%
-    group_by_(.dots = group_by_vector(intervalInSeconds)) %>%
+    group_by_(.dots = .group_by_vector(intervalInSeconds)) %>%
     summarise(CUMDIFF=sum(abs(OPEN-CLOSE))) %>%
     ungroup
 
@@ -67,4 +60,10 @@ symbol_get_efficiency_ratio <- function(prices, group_by_vector) {
 
 
 
-FTSE_PRICES_ER <- symbol_get_efficiency_ratio(FTSE_PRICES, group_by_vector)
+# FTSE values ----
+
+# Load FTSE
+#FTSE <- symbol_get_info("INDEXFTSE", "UKX")
+intervalInSeconds <- 60*60*24
+FTSE_PRICES <- symbol_get_prices("INDEXFTSE", "UKX", intervalInSeconds , "2Y")
+FTSE_PRICES_ER <- symbol_get_efficiency_ratio(FTSE_PRICES, .group_by_vector(intervalInSeconds))
